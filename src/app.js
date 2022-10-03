@@ -6,7 +6,7 @@ app.use(express.json());
 
 const port = 3000;
 
-app.use("users/", userRouter);
+app.use("/users", userRouter);
 
 app.listen(port, () => {
   console.log(`Server is running in port ${port}`);
