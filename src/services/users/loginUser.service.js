@@ -1,23 +1,42 @@
-import users from "../../database";
+import "dotenv/config";
 import jwt from "jsonwebtoken";
 import * as bycrypt from "bcryptjs";
+import database from "../../database";
 
-const loginUserService = (email, password) => {
-  const user = users.find((user) => user.email === email);
+const loginUserService = async (email, password) => {
+  try {
+    const response = await database.query(
+      `
+      SELECT 
+        *
+      FROM 
+        users u 
+      WHERE 
+        email = $1;
+      `,
+      [email]
+    );
 
-  if (!user) {
-    return "Email ou senha inválidos";
+    const user = response.rows[0];
+
+    if (!user) {
+      return "Email ou senha inválidos";
+    }
+
+    const passwordMatch = bycrypt.compareSync(password, user.pwd);
+
+    if (!passwordMatch) {
+      return "Email ou senha inválidos";
+    }
+
+    const token = jwt.sign({ email: email }, process.env.SECRET_KEY, {
+      expiresIn: "24h",
+    });
+
+    return { token };
+  } catch (error) {
+    throw new Error(error);
   }
-
-  const passwordMatch = bycrypt.compareSync(password, user.password);
-
-  if (!passwordMatch) {
-    return "Email ou senha inválidos";
-  }
-
-  const token = jwt.sign({ email: email }, "SECRET_KEY", { expiresIn: "24h" });
-
-  return { token };
 };
 
 export default loginUserService;
