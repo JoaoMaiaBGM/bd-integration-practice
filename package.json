@@ -1,0 +1,18 @@
+{
+  "name": "S3-02-bd-integration-practice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:JoaoMaiaBGM/bd-integration-practice.git",
+  "author": "<joaocarlosbgm@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "sucrase": "^3.27.0"
+  }
+}
