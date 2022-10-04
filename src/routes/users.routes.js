@@ -11,7 +11,7 @@ const userRouter = Router();
 userRouter.post("", createUserController);
 userRouter.post("/login", loginUserController);
 userRouter.get("", listUsersController);
-userRouter.patch("/:id", /* verifyAuthTokenMiddleware, */ updateUserController);
-userRouter.delete("/:id", /* verifyAuthTokenMiddleware, */ deleteUserControler);
+userRouter.patch("/:id", verifyAuthTokenMiddleware, updateUserController);
+userRouter.delete("/:id", verifyAuthTokenMiddleware, deleteUserControler);
 
 export default userRouter;
