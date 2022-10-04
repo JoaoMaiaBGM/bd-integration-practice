@@ -29,9 +29,14 @@ const loginUserService = async (email, password) => {
       return "Email ou senha inválidos";
     }
 
-    const token = jwt.sign({ email: email }, process.env.SECRET_KEY, {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { name: user.name, email: email, id: user.id },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "24h",
+        subject: user.id,
+      }
+    );
 
     return { token };
   } catch (error) {
